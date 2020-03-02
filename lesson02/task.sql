@@ -1,6 +1,6 @@
 --1
 --valerii@VirtualBox:~$ ls -la
--- -rw-r--r--  1 valerii valerii      37 τεβ 21 22:34  .my.cnf
+-- -rw-r--r--  1 valerii valerii      37 Γ΄Γ₯Γ’ 21 22:34  .my.cnf
 
 
 -- 2
@@ -16,3 +16,7 @@ CREATE TABLE IF NOT EXISTS users (
 -- 3
 
 -- mysqldump example > example.sql
+
+-- mysql -e 'CREATE DATABASE sample'
+
+-- mysql sample < example.sql
