@@ -1,14 +1,14 @@
 
-/* скрипты характерных выборок (включающие группировки, JOIN'ы, вложенные таблицы);
-- выборка опыта работы
-- выборка стажа 
-- выборка ответов 
-- выборка баллов (ответов) пользователей
+/* СЃРєСЂРёРїС‚С‹ С…Р°СЂР°РєС‚РµСЂРЅС‹С… РІС‹Р±РѕСЂРѕРє (РІРєР»СЋС‡Р°СЋС‰РёРµ РіСЂСѓРїРїРёСЂРѕРІРєРё, JOIN'С‹, РІР»РѕР¶РµРЅРЅС‹Рµ С‚Р°Р±Р»РёС†С‹);
+- РІС‹Р±РѕСЂРєР° РѕРїС‹С‚Р° СЂР°Р±РѕС‚С‹
+- РІС‹Р±РѕСЂРєР° СЃС‚Р°Р¶Р° 
+- РІС‹Р±РѕСЂРєР° РѕС‚РІРµС‚РѕРІ 
+- РІС‹Р±РѕСЂРєР° Р±Р°Р»Р»РѕРІ (РѕС‚РІРµС‚РѕРІ) РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№
 */
 
 USE candidates;
 
--- выборка опыта работы
+-- РІС‹Р±РѕСЂРєР° РѕРїС‹С‚Р° СЂР°Р±РѕС‚С‹
 
 SELECT us.id, us.all_name, ex.company, ex.position, ex.start_date, 
        CASE WHEN ISNULL(ex.end_date) THEN NOW() ELSE ex.end_date END AS end_date
@@ -17,7 +17,7 @@ SELECT us.id, us.all_name, ex.company, ex.position, ex.start_date,
               ON us.id = ex.user_id
  ORDER BY us.all_name, end_date;
  
- -- выборка стажа 
+ -- РІС‹Р±РѕСЂРєР° СЃС‚Р°Р¶Р° 
 
  SELECT exp_start.user_id, exp_start.start_stage, exp_end.end_stage, 
         DATEDIFF(exp_end.end_stage, exp_start.start_stage) AS days
@@ -30,7 +30,7 @@ SELECT us.id, us.all_name, ex.company, ex.position, ex.start_date,
                      GROUP BY user_id) AS exp_end 
 			    ON exp_start.user_id = exp_end.user_id;
                 
--- выборка ответов пользователей
+-- РІС‹Р±РѕСЂРєР° РѕС‚РІРµС‚РѕРІ РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№
 
 SELECT ua.user_id, sp.serial_number, sp.body, ac.serial_number AS answer_number, ac.answer
   FROM user_answers AS ua
@@ -39,7 +39,7 @@ SELECT ua.user_id, sp.serial_number, sp.body, ac.serial_number AS answer_number,
 	   LEFT JOIN answer_choices AS ac ON ua.answer_id = ac.id
  ORDER BY ua.user_id, sp.serial_number;
 
--- выборка баллов пользователей
+-- РІС‹Р±РѕСЂРєР° Р±Р°Р»Р»РѕРІ РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№
 
 SELECT ua.user_id, COUNT(ua.answer_id) AS balls
   FROM user_answers AS ua
